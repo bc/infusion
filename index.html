@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infusion</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://use.typekit.net/izk7oej.js"></script>
+    <script>
+        try {
+            Typekit.load({
+                async: true
+            });
+        } catch (e) {}
+    </script>
+</head>
+
+<body>
+    <div class="introduction">
+        <div class="content">
+            <div class="main-image-container"><img src="./inf1.png" class="main-image"></div>
+            <div class="main">
+                <h4>Infusion</h4>
+                <h1>Bringing artificial intelligence to patient care.</h1>
+                <br />
+                <p>Schedule chemotherapy around your life, not your life around chemotherapy.</p>
+                <div class="email-container">
+                    <p class="caption">We&#39;re email you the day Infusion is ready for download.</p>
+                    <form class="email" id="subscribe-form" action="http://madebydeanna.us16.list-manage.com/subscribe/post-json?u=44e30578eecceb50149a4bb90&amp;id=dcde9585ea" method="post" target="_blank" novalidate>
+                        <input type="email" id="email" placeholder="Email Address" value="" name="EMAIL">
+                        <input type="submit" value="Let Me Know" name="subscribe">
+                    </form>
+                    <div id="subscribe-result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="about scroll">
+        <a href="#more">
+        <svg width="20px" height="16px" viewBox="0 0 11 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <defs></defs>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon fill="#AAAAAA" points="10 -0.00045 5.353 4.64655 0.708 -0.00045 0 0.70655 5.353 6.06055 10.707 0.70655"></polygon>
+        </g>
+        </svg>
+        </a>
+    </div>
+    <section class="features">
+        <div class="row">
+            <ul class="features-list" id="more">
+                <li class="about-container">
+                    <div class="about">
+                        <p class="subhead">Who we are</p>
+                        <p>Infusion empowers you to take control of your life. Our mobile application turns raw health data into real, digestible predictions and helps you structure your regimen around the people and events that matter most.</p>
+                    </div>
+                </li>
+                <li class="image-on-left">
+                    <div class="image">
+                        <img src="./inf2.gif">
+                    </div>
+                    <div class="content">
+                        <h2>Start with your data.</h2><br />
+                        <p>Easily track and monitor your side effects whenever, wherever. Infusion measures your symptoms based on the same grading scale used by oncologists around the country.</p>
+                    </div>
+                </li>
+                <li class="image-on-right">
+                    <div class="image">
+                        <img src="./inf3.png">
+                    </div>
+                    <div class="content">
+                        <h2>Make sense of what&#39;s happening in your body.</h2><br />
+                        <p>As you record, you'll receive a forecast of your week with predictive graphs to help you find patterns in your side effects. The more you input, the more accurately Infusion can predict.</p>
+                    </div>
+                </li>
+                <li class="image-on-left">
+                    <div class="image">
+                        <img src="./infArtboard%204.png">
+                    </div>
+                    <div class="content">
+                        <h2>Schedule your life with confidence.</h2><br />
+                        <p>Plan events around your predicted good days&mdash;or choose when your good days happen. Our algorithm helps you optimize your regimen so that you can feel your best on the days that matter the most.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="subscribe">
+        <div class="row">
+            <div class="content">
+                <h2>Subscribe to take control of your life.</h2>
+                <p>We&#39;re finishing up the final touches&mdash;we&#39;ll let you know when we're done.</p>
+            </div>
+            <div class="email-container">
+                <form class="email" id="subscribe-form-btm" action="http://madebydeanna.us16.list-manage.com/subscribe/post-json?u=44e30578eecceb50149a4bb90&amp;id=dcde9585ea" method="post" target="_blank" novalidate>
+                    <input type="email" id="email" placeholder="Email Address" value="" name="EMAIL">
+                    <input type="submit" value="Let Me Know" name="subscribe">
+                </form>
+                <div id="subscribe-result-btm"></div>
+            </div>
+        </div>
+    </section>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Top Form
+            ajaxMailChimpForm($("#subscribe-form"), $("#subscribe-result"));
+            // Turn the given MailChimp form into an ajax version of it.
+            // If resultElement is given, the subscribe result is set as html to
+            // that element.
+            function ajaxMailChimpForm($form, $resultElement) {
+                // Hijack the submission. We'll submit the form manually.
+                $form.submit(function(e) {
+                    e.preventDefault();
+                    if (!isValidEmail($form)) {
+                        var error = "Invalid email address";
+                        $resultElement.html(error);
+                        $resultElement.css("color", "#394DA1");
+                    } else {
+                        $resultElement.css("color", "#AAAAAA");
+                        $resultElement.html("Subscribing...");
+                        submitSubscribeForm($form, $resultElement);
+                    }
+                });
+            }
+            // Validate the email address in the form
+            function isValidEmail($form) {
+                // If email is empty, show error message.
+                // contains just one @
+                var email = $form.find("input[type='email']").val();
+                if (!email || !email.length) {
+                    return false;
+                } else if (email.indexOf("@") == -1) {
+                    return false;
+                }
+                return true;
+            }
+            // Submit the form with an ajax/jsonp request.
+            // Based on http://stackoverflow.com/a/15120409/215821
+            function submitSubscribeForm($form, $resultElement) {
+                $.ajax({
+                    type: "GET",
+                    url: $form.attr("action"),
+                    data: $form.serialize(),
+                    cache: false,
+                    dataType: "jsonp",
+                    jsonp: "c", // trigger MailChimp to return a JSONP response
+                    contentType: "application/json; charset=utf-8",
+                    error: function(error) {
+                        // According to jquery docs, this is never called for cross-domain JSONP requests
+                    },
+                    success: function(data) {
+                        if (data.result != "success") {
+                            var message = data.msg || "We weren't able to get you subscribed, but try again in a bit.";
+                            $resultElement.css("color", "#394DA1");
+                            if (data.msg && data.msg.indexOf("already subscribed") >= 0) {
+                                message = "You're already subscribed!";
+                                $resultElement.css("color", "#394DA1");
+                            }
+                            $resultElement.html(message);
+                        } else {
+                            $resultElement.css("color", "#394DA1");
+                            $resultElement.html("Thanks! We'll send you a quick email to confirm your subscription.");
+                        }
+                    }
+                });
+            }
+        });
+        // Bottom Form
+        $(document).ready(function() {
+            ajaxMailChimpForm($("#subscribe-form-btm"), $("#subscribe-result-btm"));
+            // Turn the given MailChimp form into an ajax version of it.
+            // If resultElement is given, the subscribe result is set as html to
+            // that element.
+            function ajaxMailChimpForm($form, $resultElement) {
+                // Hijack the submission. We'll submit the form manually.
+                $form.submit(function(e) {
+                    e.preventDefault();
+                    if (!isValidEmail($form)) {
+                        var error = "Invalid email address";
+                        $resultElement.html(error);
+                        $resultElement.css("color", "#394DA1");
+                    } else {
+                        $resultElement.css("color", "#AAAAAA");
+                        $resultElement.html("Subscribing...");
+                        submitSubscribeForm($form, $resultElement);
+                    }
+                });
+            }
+            // Validate the email address in the form
+            function isValidEmail($form) {
+                // If email is empty, show error message.
+                // contains just one @
+                var email = $form.find("input[type='email']").val();
+                if (!email || !email.length) {
+                    return false;
+                } else if (email.indexOf("@") == -1) {
+                    return false;
+                }
+                return true;
+            }
+            // Submit the form with an ajax/jsonp request.
+            // Based on http://stackoverflow.com/a/15120409/215821
+            function submitSubscribeForm($form, $resultElement) {
+                $.ajax({
+                    type: "GET",
+                    url: $form.attr("action"),
+                    data: $form.serialize(),
+                    cache: false,
+                    dataType: "jsonp",
+                    jsonp: "c", // trigger MailChimp to return a JSONP response
+                    contentType: "application/json; charset=utf-8",
+                    error: function(error) {
+                        // According to jquery docs, this is never called for cross-domain JSONP requests
+                    },
+                    success: function(data) {
+                        if (data.result != "success") {
+                            var message = data.msg || "We weren't able to get you subscribed, but try again in a bit.";
+                            $resultElement.css("color", "#394DA1");
+                            if (data.msg && data.msg.indexOf("already subscribed") >= 0) {
+                                message = "You're already subscribed!";
+                                $resultElement.css("color", "#394DA1");
+                            }
+                            $resultElement.html(message);
+                        } else {
+                            $resultElement.css("color", "#394DA1");
+                            $resultElement.html("Thanks! We'll send you a quick email to confirm your subscription.");
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="/scroll.js"></script>
+
+</body>
+
+</html>
